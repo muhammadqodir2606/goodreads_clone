@@ -1,0 +1,23 @@
+# Virtual environment
+env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables (parollar, secret key)
+.env
+*.env
+
+# OS files
+.DS_Store
+
+# IDE/project files
+.vscode/
+.idea/
+
+# Django specific
+media-files/
+staticfiles/
