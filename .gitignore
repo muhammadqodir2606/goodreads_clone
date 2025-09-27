@@ -19,5 +19,5 @@ __pycache__/
 .idea/
 
 # Django specific
-media-files/
+#media-files/
 staticfiles/
