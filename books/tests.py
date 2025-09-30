@@ -1,11 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-
-<<<<<<< HEAD
-from books.models import Book, BookReview
-=======
 from books.models import Book, BookAuthor, Author
->>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
 from users.models import CustomUser
 
 
