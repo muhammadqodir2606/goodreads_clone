@@ -8,10 +8,18 @@
         <div class="col-2">
             <img class="cover-pic" alt="Books" src="{{ book.cover_picture.url }}">
         </div>
-
         <div class="col-4 ms-4">
+            <h3>{{ book.title }}</h3>
+            <span class="fst-italic">
+                {% for book_author in book.bookauthor_set.all %}
+                    {% if forloop.last %}
+                        <span>{{ book_author.author.full_name }}</span>
+                    {% else %}
+                        <span>{{ book_author.author.full_name }}</span>,
+                    {% endif %}
+                {% endfor %}
+            </span>
             <p>
-                <h3>{{ book.title }}</h3>
                 {{ book.description |truncatewords:120 }}
                 <br><br>
                 isbn: {{ book.isbn }}
@@ -20,33 +28,39 @@
             </p>
         </div>
     </div>
-    
-    <div class="row">
+
+    <div class="row mb-4">
         <div class="col-6">
             <form method="post" action="{% url 'books:reviews' book.id %}">
                 {% csrf_token %}
-                {{ review_form | crispy }}
-                
+                <div class="star-rating" id="starRating">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="stars_given" id="id_stars_given">
+                {{ review_form.comment|as_crispy_field }}
                 <button class="btn btn-success">Add review</button>
             </form>
         </div>
     </div>
-
     {% if book_reviews %}
-        <h4>Reviews</h4> <hr>
-    
+        <h4>Reviews</h4>
+        <hr>
         {% for review in book_reviews %}
-            <div class="row mb-3">
-                <div class="col-1 me-2">
-                    <img class="small-profile-photo" src="{{ review.user.image.url }}">
+            <div class="review-box row align-items-start">
+                <div class="col-auto"><img class="small-profile-photo" src="{{ review.user.image.url }}" alt="profile">
                 </div>
-                <div class="col-7">
-                    <b>{{ review.user.username }}</b> rated it {{ review.stars_given }} stars <span class="fw-lighter">{{ review.created_at }}</span>
-                    <p class="mt-2 font-monospace">{{ review.comment }}</p>
-                </div>
+                <div class="col">
+                    <div><span class="review-username">{{ review.user.username }}</span> <span
+                            class="review-date">{{ review.created_at }}</span></div>
+                    <div class="stars"> {% for i in "12345" %} {% if forloop.counter <= review.stars_given %}
+                        <span class="star filled">★</span> {% else %} <span class="star">★</span> {% endif %} {% endfor %}
+                    </div>
+                    <p class="review-comment">{{ review.comment }}</p></div>
             </div>
         {% endfor %}
     {% endif %}
-
-
 {% endblock %}
