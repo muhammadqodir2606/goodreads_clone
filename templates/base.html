@@ -1,4 +1,12 @@
 {% load static %}
+<<<<<<< HEAD
+=======
+{% url 'books:list' as books_list_url %}
+{% url 'home_page' as home_page_url %}
+{% url 'users:profile' as profile_page_url %}
+{% url 'users:profile-edit' as profile_edit_page_url %}
+
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +15,10 @@
     <!-- only Css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
+<<<<<<< HEAD
+=======
+    <link href="{% static 'css/stars.css' %}" rel="stylesheet" type="text/css">
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
 </head>
 
 <body class="mx-5">
@@ -19,11 +31,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
+<<<<<<< HEAD
               <a class="nav-link active" aria-current="page" href="{% url 'home_page' %}">Home</a>
           </li>
           
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'books:list' %}">Books</a>
+=======
+              <a class="nav-link {% if request.path == home_page_url %} active {% endif %}" aria-current="page" href="{{ home_page_url }}">Home</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == books_list_url %} active {% endif %}" aria-current="page" href="{{ books_list_url }}">Books</a>
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
           </li>
       </ul>
         <div class="me-5">
@@ -70,5 +90,9 @@
 </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<<<<<<< HEAD
+=======
+    <script src="{% static 'js/star-rating.js' %}"></script>
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
 </body>
 </html>

@@ -10,8 +10,22 @@
         </div>
 
         <div class="col-4 ms-4">
+<<<<<<< HEAD
             <p>
                 <h3>{{ book.title }}</h3>
+=======
+            <h3>{{ book.title }}</h3>
+            <span class="fst-italic">
+                {% for book_author in book.bookauthor_set.all %}
+                    {% if forloop.last %}
+                        <span>{{ book_author.author.full_name }}</span>
+                    {% else %}
+                        <span>{{ book_author.author.full_name }}</span>,
+                    {% endif %}
+                {% endfor %}
+            </span>
+            <p>
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
                 {{ book.description |truncatewords:120 }}
                 <br><br>
                 isbn: {{ book.isbn }}
@@ -20,19 +34,36 @@
             </p>
         </div>
     </div>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
     <div class="row">
         <div class="col-6">
             <form method="post" action="{% url 'books:reviews' book.id %}">
                 {% csrf_token %}
+<<<<<<< HEAD
                 {{ review_form | crispy }}
                 
+=======
+                <div class="star-rating" id="starRating">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="stars_given" id="id_stars_given">
+                {{ review_form.comment|as_crispy_field }}
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
                 <button class="btn btn-success">Add review</button>
             </form>
         </div>
     </div>
 
     {% if book_reviews %}
+<<<<<<< HEAD
         <h4>Reviews</h4> <hr>
     
         {% for review in book_reviews %}
@@ -49,4 +80,26 @@
     {% endif %}
 
 
+=======
+        <h4>Reviews</h4>
+        <hr>
+
+        {% for review in book_reviews %}
+            <div class="review-box row align-items-start">
+                <div class="col-auto"><img class="small-profile-photo" src="{{ review.user.image.url }}" alt="profile">
+                </div>
+                <div class="col">
+                    <div><span class="review-username">{{ review.user.username }}</span> <span
+                            class="review-date">{{ review.created_at }}</span></div>
+                    <div class="stars"> {% for i in "12345" %} {% if forloop.counter <= review.stars_given %}
+                        <span class="star filled">★</span> {% else %} <span class="star">★</span> {% endif %} {% endfor %}
+                    </div>
+                    <p class="review-comment">{{ review.comment }}</p></div>
+            </div>
+                
+        {% endfor %}
+
+    {% endif %}
+
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
 {% endblock %}

@@ -1,7 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
 
+<<<<<<< HEAD
 from books.models import Book, BookReview
+=======
+from books.models import Book, BookAuthor, Author
+>>>>>>> 01cd144 (Men books detailga authors ni ham qo'shdim va test yozdim, yana review qoldirish va reviews listga yulduzchali tanlash qo'shdim)
 from users.models import CustomUser
 
 
@@ -135,3 +139,19 @@ class BookReviewTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse('users:login') + f"?next=/books/{self.book.id}/reviews/")
+
+
+class BookAuthorTestCase(TestCase):
+    def setUp(self):
+        self.book = Book.objects.create(title="Deep work", description="Description 1", isbn=11111, price=1)
+        self.author1 = Author.objects.create(first_name="John", last_name="Doe", email="john@gmail.com", bio="John was born in 2000")
+        self.author2 = Author.objects.create(first_name="Mukhammadkodir", last_name="Jalilov", email="mukh@gmail.com", bio="Mukhammadkodir was born in 2005")
+        self.book_author = BookAuthor.objects.create(author=self.author1, book=self.book)
+        self.book_author = BookAuthor.objects.create(author=self.author2, book=self.book)
+
+    def test_book_author(self):
+        response = self.client.get(reverse('books:detail', kwargs={'id': self.book.id}))
+        self.assertContains(response, self.author1.first_name)
+        self.assertContains(response, self.author1.last_name)
+        self.assertContains(response, self.author2.first_name)
+        self.assertContains(response, self.author2.last_name)
