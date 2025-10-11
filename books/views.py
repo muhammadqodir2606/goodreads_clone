@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -82,3 +83,41 @@ class CreateBookReview(LoginRequiredMixin, View):
                     "review_form": review_form
                 }
             )
+
+
+class UpdateReviewView(LoginRequiredMixin, View):
+    def get(self, request, book_id, review_id):
+        book = Book.objects.get(id=book_id)
+        review = book.bookreview_set.get(id=review_id)
+        review_form = BookReviewForm(instance=review)
+        return render(request, 'books/edit_review.html', {'book': book, 'review': review, 'review_form': review_form})
+
+    def post(self, request, book_id, review_id):
+        book = Book.objects.get(id=book_id)
+        review = book.bookreview_set.get(id=review_id)
+        review_form = BookReviewForm(request.POST, instance=review)
+        if review_form.is_valid():
+            review_form.save()
+            return redirect(reverse('books:detail', kwargs={'id': book.id}))
+
+        return render(request, 'books/edit_review.html', {'book': book, 'review': review, 'review_form': review_form})
+
+
+class ConfirmDeleteReviewView(LoginRequiredMixin, View):
+    def get(self, request, book_id, review_id):
+        book = Book.objects.get(id=book_id)
+        review = book.bookreview_set.get(id=review_id)
+        review_form = BookReviewForm(instance=review)
+        return render(
+            request,
+            'books/confirm_delete_review.html',
+            {'book': book, 'review': review, 'review_form': review_form})
+
+
+class DeleteReviewView(LoginRequiredMixin, View):
+    def get(self, request, book_id, review_id):
+        review = BookReview.objects.get(id=review_id)
+        if review.user == request.user:
+            review.delete()
+            messages.success(request, 'Review successfully deleted.')
+            return redirect(reverse('books:detail', kwargs={'id': book_id}))

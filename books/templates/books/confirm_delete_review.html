@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %} Delete Confirm Review {% endblock %}
+
+{% block content %}
+    
+    <h3>Do you really want to delete the review of this book?</h3>
+
+    <p>{{ book.title }}</p>
+
+    <p>{{ review.comment }}</p>
+
+    <a href="{% url 'books:review-delete' book.id review.id %}" class="btn btn-outline-danger">Yes</a> <a href="{% url 'books:detail' book.id %}" class="btn btn-outline-primary">No</a>
+
+{% endblock %}

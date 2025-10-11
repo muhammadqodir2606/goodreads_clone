@@ -23,5 +23,4 @@ class BookReviewForm(forms.ModelForm):
 
     class Meta:
         model = BookReview
-        fields = ['stars_given', 'comment']
-        widgets = {'stars_given': forms.HiddenInput()}
+        fields = ['comment', 'stars_given']
