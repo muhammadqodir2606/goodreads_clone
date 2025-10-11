@@ -51,15 +51,24 @@
         <hr>
         {% for review in book_reviews %}
             <div class="review-box row align-items-start">
-                <div class="col-auto"><img class="small-profile-photo" src="{{ review.user.image.url }}" alt="profile">
+                <div class="col-auto">
+                    <img class="small-profile-photo" src="{{ review.user.image.url }}" alt="profile">
                 </div>
                 <div class="col">
-                    <div><span class="review-username">{{ review.user.username }}</span> <span
-                            class="review-date">{{ review.created_at }}</span></div>
+                    <div>
+                        <span class="review-username">{{ review.user.username }}</span>
+                        <span class="review-date">{{ review.created_at }}</span>
+                        {% if review.user == request.user %}
+                            <a href="{% url 'books:review-update' book.id review.id %}"><i style="cursor: pointer" class="bi bi-pencil-square"></i></a>
+                            <a href="{% url 'books:review-confirm-delete' book.id review.id %}"><i style="cursor:pointer;" class="bi bi-trash"></i></a>
+                        {% endif %}
+                    </div>
+
                     <div class="stars"> {% for i in "12345" %} {% if forloop.counter <= review.stars_given %}
                         <span class="star filled">★</span> {% else %} <span class="star">★</span> {% endif %} {% endfor %}
                     </div>
-                    <p class="review-comment">{{ review.comment }}</p></div>
+                    <p class="review-comment">{{ review.comment }}</p>
+                </div>
             </div>
         {% endfor %}
     {% endif %}

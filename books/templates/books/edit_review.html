@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %} Edit Review {% endblock %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-2">
+            <img class="cover-pic" alt="Books" src="{{ book.cover_picture.url }}">
+        </div>
+        <div class="col-4 ms-4">
+            <h3>{{ book.title }}</h3>
+            <span class="fst-italic">
+                {% for book_author in book.bookauthor_set.all %}
+                    {% if forloop.last %}
+                        <span>{{ book_author.author.full_name }}</span>
+                    {% else %}
+                        <span>{{ book_author.author.full_name }}</span>,
+                    {% endif %}
+                {% endfor %}
+            </span>
+            <p>
+                {{ book.description |truncatewords:120 }}
+                <br><br>
+                isbn: {{ book.isbn }}
+                <br>
+                price: {{ book.price }}$
+            </p>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-6">
+            <form method="post" action="{% url 'books:review-update' book.id review.id %}">
+                {% csrf_token %}
+                <div class="star-rating" id="starRating" data-current="{{ review.stars_given }}">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="stars_given" id="id_stars_given" value="{{ review.stars_given }}">
+                {{ review_form.comment|as_crispy_field }}
+                <button class="btn btn-success">Edit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

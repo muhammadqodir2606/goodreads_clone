@@ -9,7 +9,9 @@ urlpatterns = [
     path('', landing_page, name='landing_page'),
     path('users/', include('users.urls')),
     path('books/', include('books.urls')),
-    path('home/', home_page, name='home_page')
+    path('home/', home_page, name='home_page'),
+    path('api/', include('api.urls'), name='api'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ]
 
